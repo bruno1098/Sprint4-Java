@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalhes dos Clientes</title>
+    <link rel="stylesheet" th:href="@{/css/cliente.css}">
+</head>
+<body>
+
+<div class="back-button">
+    <a href="/dashboard">
+        <span class="icon">&#8592;</span> Voltar
+    </a>
+</div>
+
+<div class="cards-container">
+    <div class="card" onclick="flipCard(this)">
+        <div class="card-front">
+            <img th:src="@{/images/plusoft.jpg}" alt="Imagem do Cliente">
+            <h3>Plusoft</h3>
+        </div>
+        <div class="card-back">
+            <h3>Plusoft</h3>
+            <p>A Plusoft é uma empresa brasileira de software especializada em experiência humana (HX). A empresa desenvolve e implementa softwares omnichannel de gestão de relacionamentos com clientes (CRM) para todos os mercados. O objetivo da Plusoft é melhorar a relação entre as pessoas e as empresas através de experiências positivas.</p>
+        </div>
+    </div>
+
+    <div class="card" onclick="flipCard(this)">
+        <div class="card-front">
+            <img th:src="@{/images/fiap.webp}" alt="Imagem do Cliente">
+            <h3>FIAP</h3>
+        </div>
+        <div class="card-back">
+            <h3>FIAP</h3>
+            <p>A Faculdade de Informática e Administração Paulista (FIAP) é uma instituição brasileira de ensino superior que se dedica à tecnologia da informação e à gestão empresarial.</p>
+        </div>
+    </div>
+
+    <div class="card" onclick="flipCard(this)">
+        <div class="card-front">
+            <img th:src="@{/images/microsoft.png}" alt="Imagem do Cliente">
+            <h3>Microsoft</h3>
+        </div>
+        <div class="card-back">
+            <h3>Microsoft</h3>
+            <p>A Microsoft é uma empresa transnacional americana que desenvolve, fabrica, licencia, apoia e vende softwares de computador, produtos eletrônicos, computadores e serviços pessoais.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    function flipCard(card) {
+        card.classList.toggle('flipped');
+    }
+</script>
+
+</body>
+</html>

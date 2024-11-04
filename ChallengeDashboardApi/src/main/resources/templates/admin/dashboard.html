@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+    <script th:src="@{/js/scripts.js}"></script>
+</head>
+
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <div th:replace="layout/sidebar :: sidebar"></div>
+        </div>
+        <div class="col-md-10">
+            <h1>Dashboard</h1>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <h5 class="card-title">Total de Usuários</h5>
+                            <p class="card-text" th:text="${totalUsuarios}">0</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card mb-2">
+                        <div class="card-body">
+                            <h5 class="card-title">Feedbacks Recebidos</h5>
+                            <p class="card-text" th:text="${totalFeedbacks}">0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Feedbacks</title>
+    <link rel="stylesheet" th:href="@{/css/feedback.css}">
+    <script th:src="@{/js/scripts.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Adiciona FontAwesome -->
+</head>
+<body>
+
+<div class="feedback-container">
+    <div class="back-button">
+        <a href="/dashboard">
+            <span class="icon">&#8592;</span> Voltar
+        </a>
+    </div>
+
+    <h2>Últimos Feedbacks</h2>
+
+    <!-- Botão para adicionar novo feedback -->
+    <div class="add-feedback-button-container">
+        <a href="/feedbacks/novo" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Adicionar Novo Feedback
+        </a>
+    </div>
+
+    <!-- Tabela que exibe os feedbacks já cadastrados -->
+    <table class="feedback-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Usuário</th>
+            <th>Comentário</th>
+            <th>Rating</th>
+            <th>Data</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody id="feedback-table-body">
+        <tr th:each="feedback : ${feedbacks}">
+            <td th:text="${feedback.id}"></td>
+            <td th:text="${feedback.usuario.nome}"></td>
+            <td th:text="${feedback.descricao}"></td>
+            <td th:text="${feedback.nota}"></td>
+            <td th:text="${#temporals.format(feedback.data, 'dd/MM/yyyy HH:mm')}"></td>
+            <td>
+                <div class="feedback-actions">
+                    <button class="btn btn-warning btn-sm"
+                            th:data-id="${feedback.id}"
+                            th:data-descricao="${feedback.descricao}"
+                            th:data-nota="${feedback.nota}"
+                            th:data-usuario-id="${feedback.usuario.id}"
+                            onclick="openEditPopup(this)">
+                        <i class="fas fa-edit"></i> Editar
+                    </button>
+                    <a th:href="@{'/feedbacks/deletar/' + ${feedback.id}}"
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('Tem certeza que deseja deletar este feedback?');">
+                        <i class="fas fa-trash-alt"></i> Deletar
+                    </a>
+                </div>
+            </td>
+
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div id="editFeedbackPopup" class="popup" style="display:none;">
+    <div class="popup-content">
+        <span class="close-btn" onclick="closeEditPopup()">&times;</span>
+        <h2>Editar Feedback</h2>
+        <form id="editFeedbackForm" method="post">
+            <input type="hidden" id="feedbackId" name="id">
+            <div>
+                <label for="descricao">Comentário:</label>
+                <textarea id="editDescricao" name="descricao" required></textarea>
+            </div>
+            <div>
+                <label for="nota">Rating:</label>
+                <input type="number" id="editNota" name="nota" required min="1" max="5">
+            </div>
+            <div>
+                <label for="usuario">Usuário:</label>
+                <select id="editUsuario" name="usuario.id" required>
+                    <option th:each="usuario : ${usuarios}" th:value="${usuario.id}" th:text="${usuario.nome}"></option>
+                </select>
+            </div>
+
+            <button type="submit">Salvar</button>
+        </form>
+    </div>
+</div>
+
+<div class="chart-button-container">
+    <button id="showChartButton">Exibir Gráfico de Ratings</button>
+</div>
+<div id="chartPopup" class="popup" style="display:none;">
+    <div class="popup-content">
+        <span class="close-btn" onclick="closeChartPopup()">&times;</span>
+        <h2>Distribuição de Ratings</h2>
+        <canvas id="feedbackChart"></canvas>
+    </div>
+</div>
+
+<script>
+    function openEditPopup(button) {
+        var id = button.getAttribute('data-id');
+        var descricao = button.getAttribute('data-descricao');
+        var nota = button.getAttribute('data-nota');
+        var usuarioId = button.getAttribute('data-usuario-id');
+
+        document.getElementById('feedbackId').value = id;
+        document.getElementById('editDescricao').value = descricao;
+        document.getElementById('editNota').value = nota;
+
+        const selectElement = document.getElementById('editUsuario');
+        for (let i = 0; i < selectElement.options.length; i++) {
+            if (selectElement.options[i].value == usuarioId) {
+                selectElement.selectedIndex = i;
+                break;
+            }
+        }
+
+        document.getElementById('editFeedbackForm').action = '/feedbacks/editar/' + id;
+
+        document.getElementById('editFeedbackPopup').style.display = 'flex';
+    }
+
+    function closeEditPopup() {
+        document.getElementById('editFeedbackPopup').style.display = 'none';
+    }
+
+    function closeChartPopup() {
+        document.getElementById('chartPopup').style.display = 'none';
+    }
+
+    document.getElementById('showChartButton').addEventListener('click', function() {
+        document.getElementById('chartPopup').style.display = 'flex';
+        generateChart();  // Gera o gráfico quando o botão é clicado
+    });
+
+    function deleteFeedback(id) {
+        if (confirm('Tem certeza que deseja deletar este feedback?')) {
+            window.location.href = '/feedbacks/deletar/' + id;
+        }
+    }
+
+    function generateChart() {
+        const ctx = document.getElementById('feedbackChart').getContext('2d');
+        const labels = ['Neutro', 'Bom', 'Ruim', 'Insatisfeito'];
+        const data = [
+            10, 5, 3, 2
+        ];
+
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Quantidade de Feedbacks',
+                    data: data,
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    window.onload = function() {
+        console.log("Feedbacks carregados via Thymeleaf");
+    }
+</script>
+
+</body>
+</html>

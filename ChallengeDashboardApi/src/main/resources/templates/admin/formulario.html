@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title th:text="${#strings.isEmpty(usuario.id) ? 'Novo Usuário' : 'Atualizar Usuário'}">Usuário</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/formulario.css}">
+</head>
+<body>
+
+<div class="container">
+  <h1 th:text="${#strings.isEmpty(usuario.id) ? 'Novo Usuário' : 'Atualizar Usuário'}"></h1>
+
+  <form th:action="@{/usuarios}" th:object="${usuario}" method="post">
+    <input type="hidden" th:field="*{id}" />
+
+    <div class="form-group">
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" name="nome" th:field="*{nome}" class="form-control" placeholder="Digite o nome" required>
+    </div>
+
+    <div class="form-group">
+      <label for="email">E-mail:</label>
+      <input type="email" id="email" name="email" th:field="*{email}" class="form-control" placeholder="Digite o e-mail" required>
+    </div>
+
+    <div class="form-group">
+      <label for="senha">Senha:</label>
+      <input type="password" id="senha" name="senha" th:field="*{senha}" class="form-control" placeholder="Digite a senha" required>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary" th:text="${#strings.isEmpty(usuario.id) ? 'Salvar' : 'Atualizar'}"></button>
+    </div>
+  </form>
+
+  <div class="back-button">
+    <a href="/usuarios">
+      <span class="icon">&#8592;</span> Voltar
+    </a>
+  </div>
+</div>
+
+</body>
+</html>

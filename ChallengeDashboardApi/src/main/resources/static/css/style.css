@@ -1,0 +1,306 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url('https://img.freepik.com/fotos-gratis/fundo-estetico-com-efeito-de-luz-led-neon-abstrato_53876-103664.jpg?t=st=1730690846~exp=1730694446~hmac=e98e4cf5b7230d065d1cd92948c8fe1a3934a6ed3dba436c1d85975545b1468e&w=1800');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: Arial, sans-serif;
+    color: #fff;
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    perspective: 1000px;
+}
+
+.card {
+    width: 350px;
+    padding: 0;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.8s ease;
+}
+
+.card.flip {
+    transform: rotateY(180deg);
+}
+
+.card-face {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    backface-visibility: hidden;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.85);
+    text-align: center;
+}
+
+.card-face.back {
+    transform: rotateY(180deg);
+}
+
+.card h1 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.absolute {
+    position: absolute;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.loader {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.loader svg {
+    margin: 0 5px;
+}
+
+@keyframes dashArray {
+    0% { stroke-dasharray: 0 1 359 0; }
+    50% { stroke-dasharray: 0 359 1 0; }
+    100% { stroke-dasharray: 359 1 0 0; }
+}
+
+@keyframes spinDashArray {
+    0% { stroke-dasharray: 270 90; }
+    50% { stroke-dasharray: 0 360; }
+    100% { stroke-dasharray: 270 90; }
+}
+
+@keyframes dashOffset {
+    0% { stroke-dashoffset: 365; }
+    100% { stroke-dashoffset: 5; }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    12.5%, 25% { transform: rotate(270deg); }
+    37.5%, 50% { transform: rotate(540deg); }
+    62.5%, 75% { transform: rotate(810deg); }
+    87.5%, 100% { transform: rotate(1080deg); }
+}
+
+.cssbuttons-io-button {
+    background: #a370f0;
+    color: white;
+    font-family: inherit;
+    padding: 0.35em;
+    padding-left: 1.2em;
+    font-size: 17px;
+    font-weight: 500;
+    border-radius: 0.9em;
+    border: none;
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    box-shadow: inset 0 0 1.6em -0.6em #714da6;
+    overflow: hidden;
+    position: relative;
+    height: 2.8em;
+    padding-right: 3.3em;
+    cursor: pointer;
+    margin: 20px auto 0;
+}
+
+.cssbuttons-io-button .icon {
+    background: white;
+    margin-left: 1em;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 2.2em;
+    width: 2.2em;
+    border-radius: 0.7em;
+    box-shadow: 0.1em 0.1em 0.6em 0.2em #7b52b9;
+    right: 0.3em;
+    transition: all 0.3s;
+}
+
+.cssbuttons-io-button:hover .icon {
+    width: calc(100% - 0.6em);
+}
+
+.cssbuttons-io-button .icon svg {
+    width: 1.1em;
+    transition: transform 0.3s;
+    color: #7b52b9;
+}
+
+.cssbuttons-io-button:hover .icon svg {
+    transform: translateX(0.1em);
+}
+
+.cssbuttons-io-button:active .icon {
+    transform: scale(0.95);
+}
+
+.box-input {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+@keyframes gradient-rotation {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 400% 50%;
+    }
+}
+
+.border {
+    background-image: linear-gradient(270deg, #e300ff, #8a00ff, #007cff, #00e0ed, #ff00aa, #e300ff);
+    background-size: 400%;
+    animation: gradient-rotation 6s linear infinite;
+    box-shadow: -15px -5px 20px rgba(225, 0, 255, 0.4),
+                15px -5px 20px rgba(138, 0, 255, 0.4),
+                15px 5px 20px rgba(0, 124, 255, 0.4),
+                -15px 5px 20px rgba(0, 224, 237, 0.4);
+    padding: 3px;
+    border-radius: 10px;
+    display: inline-block;
+    width: 100%;
+}
+
+@keyframes shadow-rotation {
+    0% {
+        box-shadow: -15px -5px 20px rgba(225, 0, 255, 0.4),
+                    15px -5px 20px rgba(138, 0, 255, 0.4),
+                    15px 5px 20px rgba(0, 124, 255, 0.4),
+                    -15px 5px 20px rgba(0, 224, 237, 0.4);
+    }
+    100% {
+        box-shadow: 15px 5px 20px rgba(225, 0, 255, 0.4),
+                    -15px 5px 20px rgba(138, 0, 255, 0.4),
+                    -15px -5px 20px rgba(0, 124, 255, 0.4),
+                    15px -5px 20px rgba(0, 224, 237, 0.4);
+    }
+}
+
+.border {
+    animation: gradient-rotation 6s linear infinite, shadow-rotation 6s linear infinite;
+}
+
+.input {
+    background-color: #212121;
+    width: 90%;
+    height: 40px;
+    padding: 0 10px;
+    font-size: 1.1em;
+    border: none;
+    color: white;
+    outline: 0;
+    border-radius: 10px;
+}
+
+.input::placeholder {
+    color: #c0b9c0;
+    transition: all 0.5s ease-in, transform 0.2s ease-in 0.6s;
+}
+
+.input:focus::placeholder {
+    padding-left: 165px;
+    transform: translateY(-50px);
+}
+
+.register {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.register a {
+    color: #a370f0;
+    text-decoration: none;
+}
+
+.register a:hover {
+    text-decoration: underline;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-content {
+    background-color: #1f1f1f;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.modal-content h2 {
+    margin-bottom: 20px;
+}
+
+.modal-content button {
+    background: #a370f0;
+    color: white;
+    font-family: inherit;
+    padding: 0.35em 1.2em;
+    font-size: 17px;
+    font-weight: 500;
+    border-radius: 0.9em;
+    border: none;
+    cursor: pointer;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.shake {
+  animation: shake 0.4s;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(5px); }
+  60% { transform: translateX(-5px); }
+  80% { transform: translateX(5px); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes zoomIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
